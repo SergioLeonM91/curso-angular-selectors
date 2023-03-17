@@ -1,0 +1,73 @@
+<h1>Nested Selectors</h1>
+<hr>
+
+<form [formGroup]="myForm" (ngSubmit)="save()">
+
+    <!-- Region -->
+    <div class="row mb-3">
+        <div class="col">
+            <label class="form-label">Region:</label>
+            <select
+                class="form-control"
+                formControlName="region">
+                <option value="">-- Select Region --</option>
+                <option
+                    *ngFor="let region of regions"
+                    [value]="region | lowercase">{{ region }}</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Countries -->
+    <div class="row mb-3" *ngIf="countries.length !== 0">
+        <div class="col">
+            <label class="form-label">Country:</label>
+            <select
+                class="form-control"
+                formControlName="country">
+                <option value="">-- Select Country --</option>
+                <option
+                    *ngFor="let country of countries"
+                    [value]="country.cca3">{{ country.name.common }}</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Borders -->
+    <div class="row mb-3" *ngIf="borders.length !== 0">
+        <div class="col">
+            <label class="form-label">Border:</label>
+            <select
+                class="form-control"
+                formControlName="border">
+                <option value="">-- Select Border Country --</option>
+                <option
+                    *ngFor="let border of borders"
+                    [value]="border.cca3">{{ border.name.common }}</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="loading">
+        <div class="col">
+            <div class="alert alert-primary">
+                Loading...
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <button
+                type="submit"
+                class="btn btn-primary float-end">
+                Save
+            </button>
+        </div>
+    </div>
+
+</form>
+
+<h3>Form</h3>
+<pre>Valid: {{ myForm.valid }}</pre>
+<pre>{{ myForm.value | json }}</pre>
